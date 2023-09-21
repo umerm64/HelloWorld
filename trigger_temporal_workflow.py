@@ -56,9 +56,9 @@ if response.status_code == 201:
     print(response.json()['id'])
     # time.sleep(5)
     res = requests.post(url="https://api.breu.ngrok.io/providers/github/artifact-ready", data=json.dumps({
-            "pull_request_id": response.json()['id'],
+            "pull_request_id": str(response.json()['id']),
             "image": "asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:latest",
-            "repo_id": response.json()['head']['repo']['id'],
+            "repo_id": str(response.json()['head']['repo']['id']),
             "registry": "GCPArtifactRegistry",
             "digest": "sha256:c7b06c949658f325997f1184b6a2dd1e1f1da29a12d7d18b574fcaeafced76d8",
             "installation_id": "41716466"
