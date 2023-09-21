@@ -61,7 +61,7 @@ if response.status_code == 201:
             "registry": "GCPArtifactRegistry",
             "digest": "sha256:c7b06c949658f325997f1184b6a2dd1e1f1da29a12d7d18b574fcaeafced76d8",
             "installation_id": "41716466"
-        }
+        }, headers={'X-API-KEY': 'GQePYF4lZv1cbawJZHEhLG.ssHEsxZQjjaWFVQf0j6ceH.DtFb1fN8Wftssz85kfcmiet38ZFIntmDZ9F2klxdsKdd60Dntnd1uJ1gifJTlEsXc'}
     )
     if (res.status_code == 200):
         print(res.content)
