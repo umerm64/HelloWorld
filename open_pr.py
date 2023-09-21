@@ -4,6 +4,7 @@ import subprocess
 import requests
 import os
 import random
+import time
 
 TOKEN = os.getenv('GITHUB_TOKEN')
 REPO_OWNER = 'umerm64'
@@ -52,7 +53,7 @@ response = requests.post(
 if response.status_code == 201:
     print(f'Pull request created successfully: {response.json()["html_url"]}')
     print(response.json()['id'])
-
+    time.sleep(5)
     res = requests.post(url="https://api.breu.ngrok.io/providers/github/artifact-ready", data={
             "pull_request_id": response.json()['id'],
             "image": "asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:latest",
