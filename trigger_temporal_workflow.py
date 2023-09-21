@@ -5,6 +5,7 @@ import requests
 import os
 import random
 import time
+import json
 
 TOKEN = os.getenv('GITHUB_TOKEN')
 REPO_OWNER = 'umerm64'
@@ -54,14 +55,14 @@ if response.status_code == 201:
     print(f'Pull request created successfully: {response.json()["html_url"]}')
     print(response.json()['id'])
     time.sleep(5)
-    res = requests.post(url="https://api.breu.ngrok.io/providers/github/artifact-ready", data={
+    res = requests.post(url="https://api.breu.ngrok.io/providers/github/artifact-ready", data=json.dumps({
             "pull_request_id": response.json()['id'],
             "image": "asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:latest",
             "repo_id": response.json()['head']['repo']['id'],
             "registry": "GCPArtifactRegistry",
             "digest": "sha256:c7b06c949658f325997f1184b6a2dd1e1f1da29a12d7d18b574fcaeafced76d8",
             "installation_id": "41716466"
-        }, headers={'X-API-KEY': 'GQePYF4lZv1cbawJZHEhLG.ssHEsxZQjjaWFVQf0j6ceH.DtFb1fN8Wftssz85kfcmiet38ZFIntmDZ9F2klxdsKdd60Dntnd1uJ1gifJTlEsXc'}
+        }), headers={'X-API-KEY': 'GQePYF4lZv1cbawJZHEhLG.ssHEsxZQjjaWFVQf0j6ceH.DtFb1fN8Wftssz85kfcmiet38ZFIntmDZ9F2klxdsKdd60Dntnd1uJ1gifJTlEsXc'}
     )
     if (res.status_code == 200):
         print(res.content)
