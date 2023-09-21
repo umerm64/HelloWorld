@@ -51,5 +51,6 @@ response = requests.post(
 
 if response.status_code == 201:
     print(f'Pull request created successfully: {response.json()["html_url"]}')
+    print(response.json())
 else:
     print(f'Failed to create pull request. Status code: {response.status_code}. Response: {response.text}')
