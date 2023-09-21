@@ -22,7 +22,6 @@ with open('readme.md', 'a') as file:
 # Step 1: Commit changes
 subprocess.check_call(['git', 'branch', '-M', HEAD_BRANCH])
 
-
 commit_message = 'patch'
 subprocess.check_call(['git', 'add', '-A'])
 subprocess.check_call(['git', 'commit', '-m', commit_message])
