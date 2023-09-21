@@ -51,6 +51,17 @@ response = requests.post(
 
 if response.status_code == 201:
     print(f'Pull request created successfully: {response.json()["html_url"]}')
-    print(response.json())
+    print(response.json()['id'])
+
+    requests.post(url="https://api.breu.ngrok.io", data={
+            "pull_request_id": response.json()['id'],
+            "image": "asia-southeast1-docker.pkg.dev/breu-dev/ctrlplane/helloworld:latest",
+            "repo_id": response.json()['head']['repo']['id'],
+            "registry": "GCPArtifactRegistry",
+            "digest": "sha256:c7b06c949658f325997f1184b6a2dd1e1f1da29a12d7d18b574fcaeafced76d8",
+            "installation_id": "41716466"
+        }
+    )
+    print("artifacts pushed")
 else:
     print(f'Failed to create pull request. Status code: {response.status_code}. Response: {response.text}')
