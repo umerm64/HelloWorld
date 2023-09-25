@@ -45,6 +45,9 @@ data = {
     'base': BASE_BRANCH
 }
 
+print("headers", headers)
+print("data", data)
+
 response = requests.post(
     f'https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/pulls',
     headers=headers,
