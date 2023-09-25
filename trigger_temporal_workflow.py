@@ -7,7 +7,7 @@ import random
 import time
 import json
 
-TOKEN = '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' #os.getenv('GITHUB_TOKEN')
+TOKEN = os.getenv('GITHUB_TOKEN')
 REPO_OWNER = 'umerm64'
 REPO_NAME = 'HelloWorld'
 BASE_BRANCH = 'main'
