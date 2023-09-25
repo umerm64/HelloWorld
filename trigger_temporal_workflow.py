@@ -7,7 +7,7 @@ import random
 import time
 import json
 
-TOKEN = "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" #os.getenv('GITHUB_TOKEN')
+TOKEN = os.getenv('GITHUB_TOKEN')
 REPO_OWNER = 'umerm64'
 REPO_NAME = 'HelloWorld'
 BASE_BRANCH = 'main'
@@ -45,8 +45,8 @@ data = {
     'base': BASE_BRANCH
 }
 
-print("headers", headers)
-print("data", data)
+# print("headers", headers)
+# print("data", data)
 
 response = requests.post(
     f'https://api.github.com/repos/{REPO_OWNER}/{REPO_NAME}/pulls',
