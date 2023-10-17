@@ -73,6 +73,6 @@ if response.status_code == 201:
     if (res.status_code == 200):
         print("artifacts pushed", res.content)
     else:
-        print(res.status_code, res.content)
+        print("artifacts pushed failed", res.status_code, res.content)
 else:
     print(f'Failed to create pull request. Status code: {response.status_code}. Response: {response.text}')
