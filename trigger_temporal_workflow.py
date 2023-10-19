@@ -56,7 +56,8 @@ response = requests.post(
 
 if response.status_code == 201:
     print(f'Pull request created successfully: {response.json()["html_url"]}')
-    print(response.json()['id'])
+    print("repo id:", str(response.json()['head']['repo']['id']))
+    print("pr id:", response.json()['id'])
     # time.sleep(5)
     res = requests.post(url="https://api.breu.ngrok.io/providers/github/artifact-ready", data=json.dumps({
             "pull_request_id": str(response.json()['id']),
