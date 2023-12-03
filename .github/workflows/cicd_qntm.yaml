@@ -1,0 +1,24 @@
+name: CICD for quantum testing
+on:
+  push:
+    branches:
+      - main
+  repository_dispatch:
+    types:
+      - remote-trigger
+
+jobs:
+    main_job:
+        runs-on: ubuntu-20.04
+        permissions:
+            contents: "read"
+
+        steps:
+            - name: Test
+              run: |
+                echo "This is a test github action"
+                echo "PR Number: ${{ github.event.pull_request.number }}"
+
+            - name: Inform quantum #TODO
+              run: |
+                echo "Send a HTTP POST request to quantum with the result of this pipeline."
