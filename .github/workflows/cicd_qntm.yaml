@@ -18,6 +18,7 @@ jobs:
               run: |
                 echo "This is a test github action"
                 echo "PR Number: ${{ github.event.pull_request.number }}"
+                echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
 
             - name: Inform quantum #TODO
               run: |
