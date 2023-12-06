@@ -1,5 +1,6 @@
 name: CICD for quantum testing
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
