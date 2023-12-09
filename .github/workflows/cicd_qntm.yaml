@@ -15,10 +15,11 @@ jobs:
             contents: "read"
 
         steps:
-            - name: Test
+            - name: Get Branch name
               run: |
                 echo "This is a test github action"
                 echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
+                echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
 
             - name: Inform quantum #TODO
               uses: fjogeleit/http-request-action@v1
@@ -27,4 +28,4 @@ jobs:
                 method: 'POST'
                 customHeaders: '{"Content-Type": "application/json"}'
                 # customHeaders: '{"Content-Type": "application/json", "X-API-KEY": "${{secrets.QUANTUM_API_KEY}}"}'
-                data: '{"result": "success", "branch": "${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"}'
+                data: '{"result": "success", "branch": $BRANCH_NAME}'
