@@ -18,8 +18,8 @@ jobs:
             - name: Get Branch name
               run: |
                 echo "This is a test github action"
-                echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
                 echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+                echo "Branch name is $BRANCH_NAME"
 
             - name: Inform quantum #TODO
               uses: fjogeleit/http-request-action@v1
