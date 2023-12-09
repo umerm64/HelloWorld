@@ -27,4 +27,4 @@ jobs:
                 method: 'POST'
                 customHeaders: '{"Content-Type": "application/json"}'
                 # customHeaders: '{"Content-Type": "application/json", "X-API-KEY": "${{secrets.QUANTUM_API_KEY}}"}'
-                data: '{"result": "success", "branch": ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}}'
+                data: '{"result": "success", "branch": "${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"}'
