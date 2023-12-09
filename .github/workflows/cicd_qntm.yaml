@@ -18,9 +18,13 @@ jobs:
             - name: Test
               run: |
                 echo "This is a test github action"
-                echo "PR Number: ${{ github.event.pull_request.number }}"
                 echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
 
             - name: Inform quantum #TODO
-              run: |
-                echo "Send a HTTP POST request to quantum with the result of this pipeline."
+              uses: fjogeleit/http-request-action@v1
+              with:
+                url: 'https://api.breu.ngrok.io/providers/github/cicd-result'
+                method: 'POST'
+                customHeaders: '{"Content-Type": "application/json"}'
+                # customHeaders: '{"Content-Type": "application/json", "X-API-KEY": "${{secrets.QUANTUM_API_KEY}}"}'
+                data: '{"result": "success", "branch": ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}}'
