@@ -28,4 +28,4 @@ jobs:
                 method: 'POST'
                 customHeaders: '{"Content-Type": "application/json"}'
                 # customHeaders: '{"Content-Type": "application/json", "X-API-KEY": "${{secrets.QUANTUM_API_KEY}}"}'
-                data: '{"result": "success", "branch": $BRANCH_NAME}'
+                data: '{"result": "success", "branch": "$BRANCH_NAME"}'
