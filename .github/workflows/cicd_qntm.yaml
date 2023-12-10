@@ -7,6 +7,11 @@ on:
   repository_dispatch:
     types:
       - remote-trigger
+        inputs:
+          target-branch:
+            description: 'Target branch for the workflow'
+            required: true
+
 
 jobs:
     main_job:
