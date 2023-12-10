@@ -1,16 +1,16 @@
 name: CICD for quantum testing
 on:
   workflow_dispatch:
+    inputs:
+      target-branch:
+        description: 'Target branch for the workflow'
+        required: true
   push:
     branches:
       - main
   repository_dispatch:
     types:
       - remote-trigger
-        inputs:
-          target-branch:
-            description: 'Target branch for the workflow'
-            required: true
 
 
 jobs:
