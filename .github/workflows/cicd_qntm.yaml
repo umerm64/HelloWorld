@@ -23,7 +23,7 @@ jobs:
             - name: Get Branch name
               run: |
                 echo "This is a test github action"
-                echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+                echo "BRANCH_NAME=${GITHUB_REF}" >> $GITHUB_ENV
                 echo "Branch name is ${{ github.ref }}"
 
             - name: Inform quantum #TODO
