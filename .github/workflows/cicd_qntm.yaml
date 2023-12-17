@@ -31,6 +31,9 @@ jobs:
                 echo "Repository Name: ${{ github.event.repository.name }}"
                 echo "Repository ID: ${{ github.event.repository.id }}"
                 echo "GitHub Token: ${{ secrets.GITHUB_TOKEN }}"
+                echo "Branch name: ${{ github.ref }}"
+                export BRANCH_NAME=$(echo ${{ github.ref }} | awk -F'/' '{print $3}')
+                echo "Exported branch name: $BRANCH_NAME"
 
             - name: Inform quantum #TODO
               uses: fjogeleit/http-request-action@v1
