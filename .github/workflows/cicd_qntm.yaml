@@ -20,11 +20,16 @@ jobs:
             contents: "read"
 
         steps:
-            - name: Get Branch name
+            - name: Get repo information
               run: |
                 echo "This is a test github action"
                 echo "BRANCH_NAME=${GITHUB_REF}" >> $GITHUB_ENV
-                echo "Branch name is ${{ github.ref }}"
+                echo $BRANCH_NAME
+                echo "Branch name is ${{ github.ref }} AND ${{ github.ref | basename }}"
+                echo "Repository Owner: ${{ github.repository_owner }}"
+                echo "Repository Name: ${{ github.event.repository.name }}"
+                echo "Repository ID: ${{ github.event.repository.id }}"
+                echo "GitHub Token: ${{ secrets.GITHUB_TOKEN }}"
 
             - name: Inform quantum #TODO
               uses: fjogeleit/http-request-action@v1
