@@ -25,7 +25,7 @@ jobs:
                 echo "This is a test github action"
                 echo "BRANCH_NAME=${GITHUB_REF}" >> $GITHUB_ENV
                 echo $BRANCH_NAME
-                echo "Branch name is ${{ github.ref }} AND ${{ github.ref !basename }}"
+                echo "Branch name is ${{ github.ref }}"
                 echo "$(echo ${{ github.ref }} | awk -F'/' '{print $3}')"
                 echo "Repository Owner: ${{ github.repository_owner }}"
                 echo "Repository Name: ${{ github.event.repository.name }}"
