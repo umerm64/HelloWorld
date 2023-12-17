@@ -26,6 +26,7 @@ jobs:
                 echo "BRANCH_NAME=${GITHUB_REF}" >> $GITHUB_ENV
                 echo $BRANCH_NAME
                 echo "Branch name is ${{ github.ref }} AND ${{ github.ref !basename }}"
+                echo "$(echo ${{ github.ref }} | awk -F'/' '{print $3}')"
                 echo "Repository Owner: ${{ github.repository_owner }}"
                 echo "Repository Name: ${{ github.event.repository.name }}"
                 echo "Repository ID: ${{ github.event.repository.id }}"
