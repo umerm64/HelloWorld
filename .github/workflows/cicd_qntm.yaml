@@ -36,19 +36,19 @@ jobs:
           echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV  # Set environment variable for future steps
 
 
-      - name: Inform quantum #TODO
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: "https://api.breu.ngrok.io/providers/github/cicd-result"
-          method: "POST"
-          customHeaders: '{"Content-Type": "application/json"}'
-          # customHeaders: '{"Content-Type": "application/json", "X-API-KEY": "${{secrets.QUANTUM_API_KEY}}"}'
-          # data: '{"result": "success", "branch": "'$BRANCH_NAME'", "repo_owner": "${{ github.repository_owner }}", "repo_name": "${{ github.event.repository.name }}", "repo_id": "${{ github.event.repository.id }}" }'
-          data: >
-            {
-              "result": "success",
-              "branch": "${{ env.BRANCH_NAME }}",
-              "repo_owner": "${{ github.repository_owner }}",
-              "repo_name": "${{ github.event.repository.name }}",
-              "repo_id": "${{ github.event.repository.id }}"
-            }
+      # - name: Inform quantum #TODO
+      #   uses: fjogeleit/http-request-action@v1
+      #   with:
+      #     url: "https://api.breu.ngrok.io/providers/github/cicd-result"
+      #     method: "POST"
+      #     customHeaders: '{"Content-Type": "application/json"}'
+      #     # customHeaders: '{"Content-Type": "application/json", "X-API-KEY": "${{secrets.QUANTUM_API_KEY}}"}'
+      #     # data: '{"result": "success", "branch": "'$BRANCH_NAME'", "repo_owner": "${{ github.repository_owner }}", "repo_name": "${{ github.event.repository.name }}", "repo_id": "${{ github.event.repository.id }}" }'
+      #     data: >
+      #       {
+      #         "result": "success",
+      #         "branch": "${{ env.BRANCH_NAME }}",
+      #         "repo_owner": "${{ github.repository_owner }}",
+      #         "repo_name": "${{ github.event.repository.name }}",
+      #         "repo_id": "${{ github.event.repository.id }}"
+      #       }
