@@ -1,5 +1,10 @@
 name: CICD for quantum testing
 on:
+  workflow_dispatch:
+    inputs:
+      target-branch:
+        description: "Target branch for the workflow"
+        required: true
   push:
     branches:
       - main
@@ -8,17 +13,42 @@ on:
       - remote-trigger
 
 jobs:
-    main_job:
-        runs-on: ubuntu-20.04
-        permissions:
-            contents: "read"
+  main_job:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: "read"
 
-        steps:
-            - name: Test
-              run: |
-                echo "This is a test github action"
-                echo "PR Number: ${{ github.event.pull_request.number }}"
+    steps:
+      - name: Get repo information
+        run: |
+          echo "This is a test github action"
+          # echo "BRANCH_NAME=${GITHUB_REF} | awk -F'/' '{print $3}'" >> $GITHUB_ENV
+          # echo $BRANCH_NAME
+          echo "Branch name is ${{ github.ref }}"
+          echo "$(echo ${{ github.ref }} | awk -F'/' '{print $3}')"
+          echo "Repository Owner: ${{ github.repository_owner }}"
+          echo "Repository Name: ${{ github.event.repository.name }}"
+          echo "Repository ID: ${{ github.event.repository.id }}"
+          echo "GitHub Token: ${{ secrets.GITHUB_TOKEN }}"
+          # echo "Branch name: ${{ github.ref }}"
+          export BRANCH_NAME=$(echo ${{ github.ref }} | awk -F'/' '{print $3}')
+          echo "Exported branch name: $BRANCH_NAME"
+          echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV  # Set environment variable for future steps
 
-            - name: Inform quantum #TODO
-              run: |
-                echo "Send a HTTP POST request to quantum with the result of this pipeline."
+
+      # - name: Inform quantum #TODO
+      #   uses: fjogeleit/http-request-action@v1
+      #   with:
+      #     url: "https://api.breu.ngrok.io/providers/github/cicd-result"
+      #     method: "POST"
+      #     customHeaders: '{"Content-Type": "application/json"}'
+      #     # customHeaders: '{"Content-Type": "application/json", "X-API-KEY": "${{secrets.QUANTUM_API_KEY}}"}'
+      #     # data: '{"result": "success", "branch": "'$BRANCH_NAME'", "repo_owner": "${{ github.repository_owner }}", "repo_name": "${{ github.event.repository.name }}", "repo_id": "${{ github.event.repository.id }}" }'
+      #     data: >
+      #       {
+      #         "result": "success",
+      #         "branch": "${{ env.BRANCH_NAME }}",
+      #         "repo_owner": "${{ github.repository_owner }}",
+      #         "repo_name": "${{ github.event.repository.name }}",
+      #         "repo_id": "${{ github.event.repository.id }}"
+      #       }
