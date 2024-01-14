@@ -1,6 +1,5 @@
 readme
 
 quantum ready
-pr #4
 
-qasim
+umerm64-patch-28
