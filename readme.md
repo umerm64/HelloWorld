@@ -1,6 +1,5 @@
 readme
 
 quantum ready
-pr #4
 
-yamaha
+umerm64-patch-42
