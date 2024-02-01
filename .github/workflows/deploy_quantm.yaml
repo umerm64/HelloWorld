@@ -1,10 +1,10 @@
-name: Deploy
+name: Deploy quantm
 
 on:
   workflow_dispatch:
     inputs:
       commits_data:
-        description: "JSON-encoded commits data"
+        description: "Base64-encoded JSON-encoded commits data"
         required: true
 
 jobs:
@@ -15,7 +15,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Run the workflow with input data
+      - name: Decode and Unmarshal JSON data
         run: |
-          echo "Input Commits Data: ${{ inputs.commits_data }}"
-          # Now you can use the input data in your workflow steps
+          # Decode Base64 and store in a variable
+          JSON_DATA=$(echo "${{ inputs.commits_data }}" | base64 --decode)
+
+          # Unmarshal JSON into an environment variable
+          export COMMITS_DATA_JSON="$JSON_DATA"
+
+          # Print unmarshaled JSON data
+          echo "Unmarshaled Commits Data:"
+          echo "$COMMITS_DATA_JSON"
+
+          # If needed, you can use jq to pretty-print the JSON
+          echo "$COMMITS_DATA_JSON" | jq '.'
+
+      - name: Use the unmarshaled data
+        run: |
+          # Now you can use the unmarshaled data as needed in your workflow steps
