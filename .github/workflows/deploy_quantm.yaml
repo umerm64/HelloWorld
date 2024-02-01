@@ -1,0 +1,21 @@
+name: CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      commits_data:
+        description: "JSON-encoded commits data"
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Run the workflow with input data
+        run: |
+          echo "Input Commits Data: ${{ inputs.commits_data }}"
+          # Now you can use the input data in your workflow steps
