@@ -12,26 +12,29 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/auth@v0.5.0
+      - name: Authenticate with GCP
+        id: auth
+        uses: "google-github-actions/auth@v1"
         with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          token_format: access_token
+          credentials_json: ${{ secrets.GCP_JSON_KEY }}
+          access_token_lifetime: 300s
 
-      - name: Configure Docker
-        uses: actions/setup-python@v2
+      - name: Login into Google Artifact Registry
+        uses: docker/login-action@v1
         with:
-          python-version: '3.x'
+          registry: ${{ env.GCP_ARTIFACT_REPOSITORY }}
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
 
-      - name: Authenticate to Google Cloud Registry
-        run: gcloud auth configure-docker
 
-      - name: Build Docker image
-        run: docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/ctrlplane/helloworld .
+      # - name: Build Docker image
+        # run: docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/ctrlplane/helloworld .
 
-      - name: Push Docker image to Google Cloud Registry
-        run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/ctrlplane/helloworld
+      # - name: Push Docker image to Google Cloud Registry
+        # run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/ctrlplane/helloworld
 
       - name: Deploy to Cloud Run
         run: gcloud run deploy my-service --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/ctrlplane/helloworld --platform=managed --region=us-central1
