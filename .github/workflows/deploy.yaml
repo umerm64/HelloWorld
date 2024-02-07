@@ -14,24 +14,47 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Debug GCP JSON Key
-        run: echo "${{ secrets.GCP_JSON_KEY }}"
+      - name: Debug secrets
+        run: |
+          # echo "${{ secrets.GCP_JSON_KEY }}"
+          echo "${{ secrets.CLOUDRUN_SERVICE_ACCOUNT_KEY }}"
+          echo "${{ secrets.GCP_PROJECT_ID }}"
+          echo "${{ secrets.GCP_REGION }}"
+          echo "${{ secrets.GCP_ARTIFACT_REGISTRY }}"
 
 
-      - name: Authenticate with GCP
-        id: auth
-        uses: "google-github-actions/auth@v1"
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
         with:
-          token_format: access_token
-          credentials_json: ${{ secrets.GCP_JSON_KEY }}
-          access_token_lifetime: 300s
+          credentials: ${{ secrets.CLOUDRUN_SERVICE_ACCOUNT_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}  # Optional, but recommended for explicitness
 
-      - name: Login into Google Artifact Registry
-        uses: docker/login-action@v1
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v1
         with:
-          registry: ${{ env.GCP_ARTIFACT_REPOSITORY }}
-          username: oauth2accesstoken
-          password: ${{ steps.auth.outputs.access_token }}
+          service: helloworld-test
+          region: ${{ secrets.GCP_REGION }}
+          platform: managed
+          image: ${{ secrets.GCP_ARTIFACT_REGISTRY }}/helloworld:latest
+          allowUnauthenticated: true  # Recommended for enhanced security
+
+# outputs:
+  # serviceUrl: ${{ steps.deploy-to-cloudrun.outputs.serviceUrl }}
+
+      # - name: Authenticate with GCP
+      #   id: auth
+      #   uses: "google-github-actions/auth@v1"
+      #   with:
+      #     token_format: access_token
+      #     credentials_json: ${{ secrets.GCP_JSON_KEY }}
+      #     access_token_lifetime: 300s
+
+      # - name: Login into Google Artifact Registry
+      #   uses: docker/login-action@v1
+      #   with:
+      #     registry: ${{ env.GCP_ARTIFACT_REPOSITORY }}
+      #     username: oauth2accesstoken
+      #     password: ${{ steps.auth.outputs.access_token }}
 
 
       # - name: Build Docker image
@@ -40,5 +63,5 @@ jobs:
       # - name: Push Docker image to Google Cloud Registry
         # run: docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/ctrlplane/helloworld
 
-      - name: Deploy to Cloud Run
-        run: gcloud run deploy my-service --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/ctrlplane/helloworld --platform=managed --region=us-central1
+      # - name: Deploy to Cloud Run
+      #   run: gcloud run deploy my-service --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/ctrlplane/helloworld --platform=managed --region=us-central1
