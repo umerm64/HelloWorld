@@ -14,13 +14,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Debug secrets
-        run: |
-          # echo "${{ secrets.GCP_JSON_KEY }}"
-          echo "${{ secrets.CLOUDRUN_SERVICE_ACCOUNT_KEY }}"
-          echo "${{ secrets.GCP_PROJECT_ID }}"
-          echo "${{ secrets.GCP_REGION }}"
-          echo "${{ secrets.GCP_ARTIFACT_REGISTRY }}"
+      # - name: Debug secrets
+      #   run: |
+      #     # echo "${{ secrets.GCP_JSON_KEY }}"
+      #     echo "${{ secrets.CLOUDRUN_SERVICE_ACCOUNT_KEY }}"
+      #     echo "${{ secrets.GCP_PROJECT_ID }}"
+      #     echo "${{ secrets.GCP_REGION }}"
+      #     echo "${{ secrets.GCP_ARTIFACT_REGISTRY }}"
 
 
       - name: Authenticate to Google Cloud
