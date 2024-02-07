@@ -24,13 +24,13 @@ jobs:
         run: |
           gcloud auth configure-docker
 
-      - name: Build
-        run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/helloworld:latest .
+      # - name: Build
+      #   run: |
+      #     docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/helloworld:latest .
 
-      - name: Push
-        run: |
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/helloworld:latest
+      # - name: Push
+      #   run: |
+      #     docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/helloworld:latest
 
       - name: Deploy
         run: |
